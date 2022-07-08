@@ -5,16 +5,19 @@
 package slangword;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.SortedMap;
+import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -22,8 +25,10 @@ import java.util.stream.Collectors;
  * @author Admin
  */
 public class SlangWord {
+
     private String FILE_SLANGWORD = "slangword.txt";
     private String FILE_SLANGWORD_ROOT = "slangword-root.txt";
+    private String FILE_HISTORY = "slangword-history.txt";
     public TreeMap<String, List<String>> dictionary = new TreeMap<>();
     private static SlangWord obj = new SlangWord();
 
@@ -31,7 +36,7 @@ public class SlangWord {
         try {
             String dirPath = new java.io.File(".").getCanonicalPath();
             System.out.println("Current dir:" + dirPath);
-            readFile(dirPath+"\\"+FILE_SLANGWORD_ROOT);
+            readFile(dirPath + "\\" + FILE_SLANGWORD_ROOT);
         } catch (Exception e) {
 
         }
@@ -48,14 +53,14 @@ public class SlangWord {
         return obj;
     }
 
-    public void readFile(String filePath) throws Exception  {
+    public void readFile(String filePath) throws Exception {
         dictionary.clear();
         Scanner scanner = new Scanner(new File(filePath));
         scanner.useDelimiter("\n");
-        while (scanner.hasNext()) { 
+        while (scanner.hasNext()) {
             String line = scanner.next();
             String[] arrSlangWordObj = line.split("`", 0);
-            if(arrSlangWordObj.length == 2){
+            if (arrSlangWordObj.length == 2) {
                 List<String> value = new ArrayList<>();
                 String key = arrSlangWordObj[0];
                 String[] arrMeaning = arrSlangWordObj[1].split("\\|", 0);
@@ -64,26 +69,101 @@ public class SlangWord {
                     String capitalizeString = trimString.substring(0, 1).toUpperCase() + trimString.substring(1);
                     value.add(capitalizeString);
                 }
-                dictionary.put(key,value);
+                dictionary.put(key, value);
             }
         }
         scanner.close();
     }
-    
-    public Map<String, List<String>> getData(){
+
+    public Map<String, List<String>> getData() {
         return dictionary;
     }
-     
-    public Map<String, List<String>> findItemByKey(String key){
-        Map<String, List<String>> results = new HashMap<String, List<String>>();
-        if(!key.isEmpty()){
+
+    public Map<String, List<String>> findItemByKey(String key) {
+        Map<String, List<String>> results = new HashMap<>();
+        if (!key.isEmpty()) {
             results = dictionary.entrySet().stream()
-                .filter(x -> x.getKey().toLowerCase().equals(key.toLowerCase()))
-                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
-            
-        }else{
+                    .filter(x -> x.getKey().toLowerCase().equals(key.toLowerCase()))
+                    .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+
+        } else {
             results = dictionary;
         }
+        saveHistory(results);
         return results;
+    }
+
+    public Map<String, List<String>> findItemByValue(String value) {
+        Map<String, List<String>> results = new HashMap<>();
+        if (!value.isEmpty()) {
+            results = dictionary.entrySet().stream()
+                    .filter(x -> x.getValue().stream().filter(d -> d.toLowerCase().contains(value.toLowerCase())).count() > 0)
+                    .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue().stream().filter(d -> d.toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList())));
+
+        } else {
+            results = dictionary;
+        }
+        saveHistory(results);
+        return results;
+    }
+
+    public void saveHistory(Map<String, List<String>> slangMap) {
+        FileWriter fw = null;
+        try {
+            String dirPath = new java.io.File(".").getCanonicalPath();
+            fw = new FileWriter(new File(dirPath + "\\" + FILE_HISTORY), true);
+            for (String key : slangMap.keySet()) {
+                String meanings = "";
+                int i = 0;
+                for (String meaning : slangMap.get(key)) {
+                    meanings += meaning + (i == slangMap.get(key).size() - 1 ? "" : "| ");
+                    i++;
+                }
+//                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//                fw.write(key+"`"+meanings+"`"+timestamp+"\n");
+                fw.write(key + "`" + meanings + "\n");
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    public LinkedHashMap<String, List<String>> readHistory() {
+        LinkedHashMap<String, List<String>> historyMap = new LinkedHashMap<>();
+        try {
+            String dirPath = new java.io.File(".").getCanonicalPath();
+            Scanner scanner = new Scanner(new File(dirPath + "\\" + FILE_HISTORY));
+            scanner.useDelimiter("\n");
+            while (scanner.hasNext()) {
+                String line = scanner.next();
+                String[] arrSlangWordObj = line.split("`", 0);
+                if (arrSlangWordObj.length == 2) {
+                    List<String> value = new ArrayList<>();
+                    String key = arrSlangWordObj[0];
+                    String[] arrMeaning = arrSlangWordObj[1].split("\\|", 0);
+                    for (String meaning : arrMeaning) {
+                        String trimString = meaning.trim();
+                        String capitalizeString = trimString.substring(0, 1).toUpperCase() + trimString.substring(1);
+                        value.add(capitalizeString);
+                    }
+                    historyMap.put(key, value);
+                }
+            }
+            scanner.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return historyMap;
     }
 }

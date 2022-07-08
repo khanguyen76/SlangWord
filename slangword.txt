@@ -1,8 +1,9 @@
 #1`Number one
+'EM`Them
 $`Dollara| money
-$_$`Has money
+&HEARTS;`HTML code for a heart
 %)`Drunk| giddy
 &`And
 &APOS;S`Wrongly displayed 's
-&HEARTS;`HTML code for a heart
-'EM`Them
+$_$`Has money
+

@@ -1,6 +1,6 @@
 Slag`Meaning
-#1`Number one
 $`Dollara| money
+#1`Number one
 $_$`Has money
 %)`Drunk| giddy
 &`And

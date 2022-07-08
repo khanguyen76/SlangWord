@@ -23,12 +23,24 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         Map<String, List<String>> data = sw.getData();
-        fillTable(data);
+        fillSlangTable(data);
 //        System.out.println(data);
     }
 
-    public void fillTable(Map<String, List<String>> data) {
+    public void fillSlangTable(Map<String, List<String>> data) {
         tableModel = (DefaultTableModel) tblSlangWord.getModel();
+        tableModel.setRowCount(0);
+        for (String slang : data.keySet()) {
+//            System.out.print(slang);
+            for (String meaning : data.get(slang)) {
+                tableModel.addRow(new Object[]{tableModel.getRowCount() + 1, slang, meaning});
+            }
+        }
+        tableModel.fireTableDataChanged();
+    }
+    
+    public void fillHistoryTable(Map<String, List<String>> data) {
+        tableModel = (DefaultTableModel) tblHistory.getModel();
         tableModel.setRowCount(0);
         for (String slang : data.keySet()) {
 //            System.out.print(slang);
@@ -57,6 +69,9 @@ public class MainFrame extends javax.swing.JFrame {
         btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSlangWord = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblHistory = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.FlowLayout());
@@ -64,7 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setText("SLANG WORDS");
 
-        cbxSearchBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "slang", "defintion" }));
+        cbxSearchBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Slang", "Definition" }));
 
         btnSearch.setText("Tìm kiếm");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +152,55 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Từ điển", jPanel2);
 
+        jPanel3.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel3ComponentShown(evt);
+            }
+        });
+
+        tblHistory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "STT", "Slang", "Definition"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblHistory);
+        if (tblHistory.getColumnModel().getColumnCount() > 0) {
+            tblHistory.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("History", jPanel3);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -157,6 +221,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jTabbedPane1.getAccessibleContext().setAccessibleName("dictionary");
         jTabbedPane1.getAccessibleContext().setAccessibleDescription("");
 
         getContentPane().add(jPanel1);
@@ -165,15 +230,25 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        String searchBy = cbxSearchBy.getSelectedItem().toString();
+        String searchBy = cbxSearchBy.getSelectedItem().toString().toLowerCase();
         if (searchBy.equals("slang")) {
             String content = txtSearch.getText();
             Map<String, List<String>> data = sw.findItemByKey(content);
-            fillTable(data);
+            fillSlangTable(data);
             System.out.print(data.size());
         }
-
+        if (searchBy.equals("definition")) {
+            String content = txtSearch.getText();
+            Map<String, List<String>> data = sw.findItemByValue(content);
+            fillSlangTable(data);
+            System.out.print(content);
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void jPanel3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel3ComponentShown
+        Map<String, List<String>> data = sw.readHistory();
+        fillHistoryTable(data);
+    }//GEN-LAST:event_jPanel3ComponentShown
 
     /**
      * @param args the command line arguments
@@ -216,8 +291,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable tblHistory;
     private javax.swing.JTable tblSlangWord;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables

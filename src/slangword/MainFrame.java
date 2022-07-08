@@ -82,6 +82,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnAddNew = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         tabHistory = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHistory = new javax.swing.JTable();
@@ -155,6 +156,13 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnReset.setText("Khoi phuc");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabDictionaryLayout = new javax.swing.GroupLayout(tabDictionary);
         tabDictionary.setLayout(tabDictionaryLayout);
         tabDictionaryLayout.setHorizontalGroup(
@@ -166,6 +174,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(btnEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnReset)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(tabDictionaryLayout.createSequentialGroup()
                 .addComponent(cbxSearchBy, 0, 157, Short.MAX_VALUE)
@@ -186,7 +196,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddNew)
                     .addComponent(btnEdit)
-                    .addComponent(btnDelete))
+                    .addComponent(btnDelete)
+                    .addComponent(btnReset))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                 .addContainerGap())
@@ -343,7 +354,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (rowSelected != -1) {
             String slang = tblSlangWord.getModel().getValueAt(rowSelected, 1).toString();
             JPanel panel = new JPanel();
-            panel.add(new JLabel("The word '"+slang+"' will be removed. Are you sure?"));
+            panel.add(new JLabel("The word '" + slang + "' will be removed. Are you sure?"));
             int result = JOptionPane.showConfirmDialog(null, panel, "DELTE SLANG WORD", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 sw.deleteSlangWord(slang);
@@ -351,6 +362,16 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Are you sure want reset dictionary?"));
+        int result = JOptionPane.showConfirmDialog(null, panel, "RESET SLANG WORD", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            sw.reset();
+            refreshDataTable();
+        }
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,6 +412,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAddNew;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cbxSearchBy;
     private javax.swing.JLabel jLabel1;

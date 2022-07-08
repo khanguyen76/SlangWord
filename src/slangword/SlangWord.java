@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
  * @author Admin
  */
 public class SlangWord {
-
     private String FILE_SLANGWORD = "slangword.txt";
     private String FILE_SLANGWORD_ROOT = "slangword-root.txt";
     private String FILE_HISTORY = "slangword-history.txt";
@@ -35,9 +34,7 @@ public class SlangWord {
 
     public SlangWord() {
         try {
-            String dirPath = new java.io.File(".").getCanonicalPath();
-            System.out.println("Current dir:" + dirPath);
-            readFile(dirPath + "\\" + FILE_SLANGWORD);
+            readFile();
         } catch (Exception e) {
 
         }
@@ -54,26 +51,33 @@ public class SlangWord {
         return obj;
     }
 
-    public void readFile(String filePath) throws Exception {
-        dictionary.clear();
-        Scanner scanner = new Scanner(new File(filePath));
-        scanner.useDelimiter("\n");
-        while (scanner.hasNext()) {
-            String line = scanner.next();
-            String[] arrSlangWordObj = line.split("`", 0);
-            if (arrSlangWordObj.length == 2) {
-                List<String> value = new ArrayList<>();
-                String key = arrSlangWordObj[0];
-                String[] arrMeaning = arrSlangWordObj[1].split("\\|", 0);
-                for (String meaning : arrMeaning) {
-                    String trimString = meaning.trim();
-                    String capitalizeString = trimString.substring(0, 1).toUpperCase() + trimString.substring(1);
-                    value.add(capitalizeString);
+    public void readFile() {
+        try {
+            dictionary.clear();
+            String dirPath = new java.io.File(".").getCanonicalPath();
+            Scanner scanner = new Scanner(new File(dirPath + "\\" + FILE_SLANGWORD));
+            scanner.useDelimiter("\n");
+            while (scanner.hasNext()) {
+                String line = scanner.next();
+                String[] arrSlangWordObj = line.split("`", 0);
+                if (arrSlangWordObj.length == 2) {
+                    List<String> value = new ArrayList<>();
+                    String key = arrSlangWordObj[0];
+                    String[] arrMeaning = arrSlangWordObj[1].split("\\|", 0);
+                    for (String meaning : arrMeaning) {
+                        String trimString = meaning.trim();
+                        String capitalizeString = trimString.substring(0, 1).toUpperCase() + trimString.substring(1);
+                        value.add(capitalizeString);
+                    }
+                    dictionary.put(key, value);
                 }
-                dictionary.put(key, value);
             }
+            scanner.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
         }
-        scanner.close();
     }
 
     public void saveFile() {
@@ -216,5 +220,32 @@ public class SlangWord {
     public void deleteSlangWord(String slang) {
         dictionary.remove(slang);
         saveFile();
+    }
+    
+    public void reset(){
+        try {
+            dictionary.clear();
+            String dirPath = new java.io.File(".").getCanonicalPath();
+            Scanner scanner = new Scanner(new File(dirPath + "\\" + FILE_SLANGWORD_ROOT));
+            scanner.useDelimiter("\n");
+            while (scanner.hasNext()) {
+                String line = scanner.next();
+                String[] arrSlangWordObj = line.split("`", 0);
+                if (arrSlangWordObj.length == 2) {
+                    List<String> value = new ArrayList<>();
+                    String key = arrSlangWordObj[0];
+                    String[] arrMeaning = arrSlangWordObj[1].split("\\|", 0);
+                    for (String meaning : arrMeaning) {
+                        String trimString = meaning.trim();
+                        String capitalizeString = trimString.substring(0, 1).toUpperCase() + trimString.substring(1);
+                        value.add(capitalizeString);
+                    }
+                    dictionary.put(key, value);
+                }
+            }
+            scanner.close();
+        } catch (IOException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

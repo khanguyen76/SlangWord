@@ -205,4 +205,11 @@ public class SlangWord {
         dictionary.put(slang, meanings);
         saveFile();
     }
+    
+    public void editSlangWord(String slang, String meaning) {
+        List<String> meanings = new ArrayList<>();
+        meanings.add(meaning);
+        dictionary.put(slang, meanings);
+        saveFile();
+    }
 }

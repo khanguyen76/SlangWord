@@ -1,10 +1,11 @@
 #1`Number one
-$`Dollara| Money
+$`Giàu vl
 $_$`Has money
-%)`Drunk| Giddy
+%)`Phần trăm
 &`And
 &APOS;S`Wrongly displayed 's
 &HEARTS;`HTML code for a heart
 'EM`Them
 OTL`Guc nga
 T_T`Cry
+orz`Xin nhận một lạy

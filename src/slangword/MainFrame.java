@@ -32,11 +32,11 @@ public class MainFrame extends javax.swing.JFrame {
 //        System.out.println(data);
     }
 
-    public void refreshDataTable () {
+    public void refreshDataTable() {
         Map<String, List<String>> data = sw.getData();
         fillSlangTable(data);
     }
-    
+
     public void fillSlangTable(Map<String, List<String>> data) {
         tableModel = (DefaultTableModel) tblSlangWord.getModel();
         tableModel.setRowCount(0);
@@ -80,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSlangWord = new javax.swing.JTable();
         btnAddNew = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         tabHistory = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -141,7 +141,12 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Cap nhat");
+        btnEdit.setText("Cap nhat");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Xoa bo");
 
@@ -153,7 +158,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(tabDictionaryLayout.createSequentialGroup()
                 .addComponent(btnAddNew)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -175,7 +180,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddNew)
-                    .addComponent(jButton2)
+                    .addComponent(btnEdit)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
@@ -289,18 +294,44 @@ public class MainFrame extends javax.swing.JFrame {
         myPanel.add(new JLabel("Definition:"));
         myPanel.add(txtDefitition);
 
-        int result = JOptionPane.showConfirmDialog(null, myPanel,"ADD NEW SLANG WORD", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        
+        int result = JOptionPane.showConfirmDialog(null, myPanel, "ADD NEW SLANG WORD", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
         if (result == JOptionPane.OK_OPTION) {
             String slang = txtSlang.getText();
             String defitition = txtDefitition.getText();
-            Boolean isDuplicate = sw.checkDuplicate(slang,defitition);
-            if(!isDuplicate){
-                sw.addNewSlangWord(slang,defitition);
+            Boolean isDuplicate = sw.checkDuplicate(slang, defitition);
+            if (!isDuplicate) {
+                sw.addNewSlangWord(slang, defitition);
                 refreshDataTable();
+            } else {
+                Object[] option = {"Overwrite", "Duplicate"};
+                JPanel panel = new JPanel();
+                panel.add(new JLabel("The word is existed in dictionary. Please enter another word."));
+                JOptionPane.showConfirmDialog(null, panel, "Warning: word existed", JOptionPane.OK_CANCEL_OPTION);
             }
         }
     }//GEN-LAST:event_btnAddNewActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        int rowSelected = tblSlangWord.getSelectedRow();
+        if (rowSelected != -1) {
+            String slang = tblSlangWord.getModel().getValueAt(rowSelected, 1).toString();
+            JTextField txtDefitition = new JTextField(5);
+
+            JPanel myPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+            myPanel.add(new JLabel("Slang Word: " + slang));
+            myPanel.add(new JLabel("New definition:"));
+            myPanel.add(txtDefitition);
+
+            int result = JOptionPane.showConfirmDialog(null, myPanel, "EDIT SLANG WORD", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+            if (result == JOptionPane.OK_OPTION) {
+                String defitition = txtDefitition.getText();
+                sw.editSlangWord(slang, defitition);
+                refreshDataTable();
+            }
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,9 +370,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNew;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cbxSearchBy;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

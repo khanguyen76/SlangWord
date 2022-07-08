@@ -81,7 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
         tblSlangWord = new javax.swing.JTable();
         btnAddNew = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         tabHistory = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHistory = new javax.swing.JTable();
@@ -148,7 +148,12 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Xoa bo");
+        btnDelete.setText("Xoa bo");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabDictionaryLayout = new javax.swing.GroupLayout(tabDictionary);
         tabDictionary.setLayout(tabDictionaryLayout);
@@ -160,7 +165,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnDelete)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(tabDictionaryLayout.createSequentialGroup()
                 .addComponent(cbxSearchBy, 0, 157, Short.MAX_VALUE)
@@ -181,7 +186,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddNew)
                     .addComponent(btnEdit)
-                    .addComponent(jButton3))
+                    .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                 .addContainerGap())
@@ -333,6 +338,20 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int rowSelected = tblSlangWord.getSelectedRow();
+        if (rowSelected != -1) {
+            String slang = tblSlangWord.getModel().getValueAt(rowSelected, 1).toString();
+            JPanel panel = new JPanel();
+            panel.add(new JLabel("The word '"+slang+"' will be removed. Are you sure?"));
+            int result = JOptionPane.showConfirmDialog(null, panel, "DELTE SLANG WORD", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                sw.deleteSlangWord(slang);
+                refreshDataTable();
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -370,10 +389,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNew;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cbxSearchBy;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

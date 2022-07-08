@@ -1,10 +1,6 @@
-#1`Number one
 $`Giàu vl
 $_$`Has money
-%)`Phần trăm
 &`And
-&APOS;S`Wrongly displayed 's
-&HEARTS;`HTML code for a heart
 'EM`Them
 OTL`Guc nga
 T_T`Cry

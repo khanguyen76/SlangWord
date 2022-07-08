@@ -212,4 +212,9 @@ public class SlangWord {
         dictionary.put(slang, meanings);
         saveFile();
     }
+    
+    public void deleteSlangWord(String slang) {
+        dictionary.remove(slang);
+        saveFile();
+    }
 }

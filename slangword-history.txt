@@ -15372,3 +15372,10 @@ ZZZ`Sleepy| Bored| Tired
 ~`Denotes Sarcasm| Put At The End Of A Word To Make It Longer
 Æ`Registered Trademark Symbol
 ô`Trademark
+$`Giàu vl
+$_$`Has money
+&`And
+'EM`Them
+OTL`Guc nga
+T_T`Cry
+orz`Xin nhận một lạy

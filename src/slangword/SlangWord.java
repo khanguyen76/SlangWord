@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,7 @@ public class SlangWord {
         try {
             String dirPath = new java.io.File(".").getCanonicalPath();
             System.out.println("Current dir:" + dirPath);
-            readFile(dirPath + "\\" + FILE_SLANGWORD_ROOT);
+            readFile(dirPath + "\\" + FILE_SLANGWORD);
         } catch (Exception e) {
 
         }
@@ -75,9 +76,35 @@ public class SlangWord {
         scanner.close();
     }
 
+    public void saveFile() {
+        PrintWriter pw = null;
+        try {
+            String dirPath = new java.io.File(".").getCanonicalPath();
+            pw = new PrintWriter(new File(dirPath + "\\" + FILE_SLANGWORD));
+            Map<String, List<String>> slangMap = dictionary;
+            for (String key : slangMap.keySet()) {
+                String meanings = "";
+                int i = 0;
+                for (String meaning : slangMap.get(key)) {
+                    meanings += meaning + (i == slangMap.get(key).size() - 1 ? "" : "| ");
+                    i++;
+                }
+                pw.write(key + "`" + meanings + "\n");
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pw.close();
+        }
+    }
+
     public Map<String, List<String>> getData() {
         return dictionary;
     }
+//  SEARCH ---------------------------------------------------------------------------------
 
     public Map<String, List<String>> findItemByKey(String key) {
         Map<String, List<String>> results = new HashMap<>();
@@ -106,6 +133,7 @@ public class SlangWord {
         saveHistory(results);
         return results;
     }
+//  HISTORY ---------------------------------------------------------------------------------
 
     public void saveHistory(Map<String, List<String>> slangMap) {
         FileWriter fw = null;
@@ -158,12 +186,23 @@ public class SlangWord {
                 }
             }
             scanner.close();
-
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
         }
         return historyMap;
+    }
+//  ADD NEW --------------------------------------------------------------------------------- 
+
+    public Boolean checkDuplicate(String slang, String meaning) {
+        return dictionary.entrySet().stream().filter(x -> x.getKey().toLowerCase().equals(slang.toLowerCase())).count() > 0;
+    }
+
+    public void addNewSlangWord(String slang, String meaning) {
+        List<String> meanings = new ArrayList<>();
+        meanings.add(meaning);
+        dictionary.put(slang, meanings);
+        saveFile();
     }
 }

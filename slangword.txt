@@ -1,9 +1,10 @@
 #1`Number one
-'EM`Them
-$`Dollara| money
-&HEARTS;`HTML code for a heart
-%)`Drunk| giddy
+$`Dollara| Money
+$_$`Has money
+%)`Drunk| Giddy
 &`And
 &APOS;S`Wrongly displayed 's
-$_$`Has money
-
+&HEARTS;`HTML code for a heart
+'EM`Them
+OTL`Guc nga
+T_T`Cry

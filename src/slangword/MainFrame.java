@@ -629,11 +629,9 @@ public class MainFrame extends javax.swing.JFrame {
             if (!isDuplicate) {
                 sw.addNewSlangWord(slang, defitition);
                 refreshDataTable();
+                JOptionPane.showMessageDialog(rootPane, "The word has been added successfully.");
             } else {
-                Object[] option = {"Overwrite", "Duplicate"};
-                JPanel panel = new JPanel();
-                panel.add(new JLabel("The word is existed in dictionary. Please enter another word."));
-                JOptionPane.showConfirmDialog(null, panel, "Warning: word existed", JOptionPane.OK_CANCEL_OPTION);
+                JOptionPane.showMessageDialog(rootPane, "The word is existed in dictionary. Please enter another word.");
             }
         }
     }//GEN-LAST:event_btnAddNewActionPerformed
@@ -654,7 +652,9 @@ public class MainFrame extends javax.swing.JFrame {
             if (result == JOptionPane.OK_OPTION) {
                 String defitition = txtDefitition.getText();
                 sw.editSlangWord(slang, defitition);
+                txtSearch.setText("");
                 refreshDataTable();
+                 JOptionPane.showMessageDialog(rootPane, "The word has been updated successfully.");
             }
         }
     }//GEN-LAST:event_btnEditActionPerformed
@@ -669,6 +669,7 @@ public class MainFrame extends javax.swing.JFrame {
             if (result == JOptionPane.YES_OPTION) {
                 sw.deleteSlangWord(slang);
                 refreshDataTable();
+                JOptionPane.showMessageDialog(rootPane, "The word has been deleted successfully.");
             }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed

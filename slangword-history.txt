@@ -1,55 +1,62 @@
-OTL`Guc nga
-C4C`Cam for Cam
-:|`Not funny
-TWF`That Was Funny
-FLK`Funny Looking Kid
-TFFW`Too Funny For Words
-TSF`That's So Funny
-SNF`So Not Funny
-W2F`Way Too Funny
-HOOT`Funny person
-TNF`That's Not Funny
-TIRF`That/This Is Really Funny
-TIF`That Is Funny
-HHVF`Ha-Ha, Very Funny
-AQF`Ay Que Funny
-NF`Not Funny
-KF`Kinda Funny
-NFAA`Not Funny At All
-JFF`Just For Fun
-J4F`Just For Fun
-;;`Sad
-:[`Sad
-:<`Sad
-SAP`Sad And Pathetic
-BLUE`Sad
-:C`Very Sad
-TBSS`Too Bad, So Sad
-:(`Sad
-.-.`Sad
-DBS`Don't Be Sad
-:-(`Sad
-DITD`Sad
-HSIT`How Sad Is That
-S&M`Sadism and Masochism
-SMAD`Sad and mad
-=[`Sad
-V.V`Sad
-NIKE`American sportswear company
-BOBBA`Replacement swear word
-FRAK`Swear word from Battlestar Galactica
-NAFF`Substitute swear word
-NYERK`Replacement swearword
-STG`Swear To God
-S2G`Swear To God
-SMEG`All purpose swear word
-WALLAH`I swear to God in Arabic
-CUSS`Swear
-WALAHI`I swear to God
-ISTG`I Swear To God
-GINNEL`Alley
-MUA`Make-Up Alley
-$`Money
-$_$`Has money
-$`Money
-$_$`Has money
+BUZZED`Slightly drunk
+PARA`Very drunk
+TDTF`Too Drunk to Function
+RAZZ`Get drunk
+TWISTED`High and drunk
+FOLDED`Drunk
+LICKED`Drunk or high
+SD`So Drunk
+STEAMING`Drunk
+CRUNK`Crazy and drunk
+PISSED`Drunk
+DWP`Drunk While Posting
+BLOTTO`Drunk
+SLOSHED`Drunk
+DONE`Drunk
+TIPSY`Slightly drunk
+%)`Drunk
+POD`Passed Out Drunk
+SAUCED`Drunk
+LGD`Let's Get Drunk
+SLAPPED`Drunk
+WAVEY`Drunk
+LOADED`Drunk
+TURNT`Drunk
+FADED`Drunk
+DTD`Drunk Till Dawn| Drunk Till Death
+MADD`Mothers Against Drunk Driving
+MUNTED`Drunk
+WASTED`Drunk
+LUSH`Drunk person
+BUZZED`Slightly drunk
+PARA`Very drunk
+TDTF`Too Drunk to Function
+RAZZ`Get drunk
+TWISTED`High and drunk
+FOLDED`Drunk
+LICKED`Drunk or high
+SD`So Drunk
+STEAMING`Drunk
+CRUNK`Crazy and drunk
+PISSED`Drunk
+DWP`Drunk While Posting
+BLOTTO`Drunk
+SLOSHED`Drunk
+DONE`Drunk
+TIPSY`Slightly drunk
+%)`Drunk
+POD`Passed Out Drunk
+SAUCED`Drunk
+LGD`Let's Get Drunk
+SLAPPED`Drunk
+WAVEY`Drunk
+LOADED`Drunk
+TURNT`Drunk
+FADED`Drunk
+DTD`Drunk Till Dawn| Drunk Till Death
+MADD`Mothers Against Drunk Driving
+MUNTED`Drunk
+WASTED`Drunk
+LUSH`Drunk person
+BUZZED`Bu drunk
+#1`Number one

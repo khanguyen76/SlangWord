@@ -1,6 +1,4 @@
-#1`Number one
-$`Dollar
-$_$`Has money
+#1`Nhat ban roi
 %)`Drunk| Giddy
 &`And
 &APOS;S`Wrongly displayed 's
@@ -221,6 +219,7 @@ $_$`Has money
 =[`Sad
 =]`Happy
 >,<`Angry| Annoyed
+>--<>`Mui ten 1
 >.<`Frustrated| Angry| Upset| In pain
 >.>`Suspicious| Wary
 >//<`Embarrassed| Blushing
@@ -589,7 +588,6 @@ AYT`Are You There?
 AYW`As You Wish
 AYYO`Hi, hello
 AZN`Asian
-Against Medical Advice`
 B`Be
 B&`Banned| Band
 B&B`Bed & Breakfast
@@ -1070,7 +1068,7 @@ BUTTERZ`Ugly
 BUZZ`Excitement| Feeling when high
 BUZZ KILL`Ruin a special moment
 BUZZ OFF`Go away
-BUZZED`Tipsy| Slightly drunk
+BUZZED`Bu drunk
 BV`Bad Vibe
 BVB`Black Veil Brides (band)
 BVM`Blessed Virgin Mary
@@ -3389,7 +3387,6 @@ IYTT`If You Think That
 IYW`If You Want/Will
 IYWW`If You Were Wondering
 IZ`Is| It's
-Indicating hesitation`
 J`Joking
 J CAT`Mentally unstable person
 J DUB`Jehovah's Witness
@@ -5391,7 +5388,6 @@ PX`Post Exchange| Part Exchange
 PYP`Play Your Position
 PYT`Pretty Young Thing
 PZ`Peace
-Person wearing a hooded sweatshirt`
 Q`Thank You
 Q&A`Question and Answer
 Q/A`Question and Answer
@@ -6236,7 +6232,6 @@ SYTYCD`So You Think You Can Dance
 SYWISY`See You When I See You
 S^`What's Up
 Slag`Meaning
-Something really good`
 T-T`Crying
 T.T`Crying
 T2M`Talk To Me

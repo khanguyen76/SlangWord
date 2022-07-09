@@ -86,6 +86,9 @@ public class MainFrame extends javax.swing.JFrame {
         tabHistory = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHistory = new javax.swing.JTable();
+        tabRandom = new javax.swing.JPanel();
+        textSlangRandom = new javax.swing.JLabel();
+        btnRandom = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.FlowLayout());
@@ -95,7 +98,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         cbxSearchBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Slang", "Definition" }));
 
-        btnSearch.setText("Tìm kiếm");
+        btnSearch.setText("Search");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
@@ -110,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "STT", "Slang", "Definition"
+                "No.", "Slang", "Definition"
             }
         ) {
             Class[] types = new Class [] {
@@ -135,28 +138,28 @@ public class MainFrame extends javax.swing.JFrame {
             tblSlangWord.getColumnModel().getColumn(1).setMaxWidth(200);
         }
 
-        btnAddNew.setText("Them moi");
+        btnAddNew.setText("Add new");
         btnAddNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddNewActionPerformed(evt);
             }
         });
 
-        btnEdit.setText("Cap nhat");
+        btnEdit.setText("Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
             }
         });
 
-        btnDelete.setText("Xoa bo");
+        btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
             }
         });
 
-        btnReset.setText("Khoi phuc");
+        btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnResetActionPerformed(evt);
@@ -178,7 +181,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(btnReset)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(tabDictionaryLayout.createSequentialGroup()
-                .addComponent(cbxSearchBy, 0, 157, Short.MAX_VALUE)
+                .addComponent(cbxSearchBy, 0, 176, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -203,7 +206,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Từ điển", tabDictionary);
+        jTabbedPane1.addTab("Dictionary", tabDictionary);
 
         tabHistory.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -219,7 +222,7 @@ public class MainFrame extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "STT", "Slang", "Definition"
+                "No.", "Slang", "Definition"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -239,7 +242,7 @@ public class MainFrame extends javax.swing.JFrame {
         tabHistory.setLayout(tabHistoryLayout);
         tabHistoryLayout.setHorizontalGroup(
             tabHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
         );
         tabHistoryLayout.setVerticalGroup(
             tabHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,6 +253,47 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("History", tabHistory);
+
+        tabRandom.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                tabRandomComponentShown(evt);
+            }
+        });
+
+        textSlangRandom.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        textSlangRandom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textSlangRandom.setText("SLANG RANDOM");
+
+        btnRandom.setText("Click to random");
+        btnRandom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRandomActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout tabRandomLayout = new javax.swing.GroupLayout(tabRandom);
+        tabRandom.setLayout(tabRandomLayout);
+        tabRandomLayout.setHorizontalGroup(
+            tabRandomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabRandomLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(textSlangRandom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabRandomLayout.createSequentialGroup()
+                .addContainerGap(327, Short.MAX_VALUE)
+                .addComponent(btnRandom)
+                .addGap(315, 315, 315))
+        );
+        tabRandomLayout.setVerticalGroup(
+            tabRandomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabRandomLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(textSlangRandom)
+                .addGap(18, 18, 18)
+                .addComponent(btnRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(295, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Random", tabRandom);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -370,8 +414,27 @@ public class MainFrame extends javax.swing.JFrame {
         if (result == JOptionPane.YES_OPTION) {
             sw.reset();
             refreshDataTable();
+            textSlangRandom.setText("SLANG RANDOM");
         }
     }//GEN-LAST:event_btnResetActionPerformed
+
+    private void showRandomSlangWord () {
+        Map<String, List<String>> SlangMap = sw.getData();
+        Object key = sw.randomSlangWord();
+        List<String> definitions = SlangMap.get(key);
+        String strDefinitions = String.join(", ", definitions);
+        textSlangRandom.setText(key+": "+strDefinitions);
+    }
+    
+    private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
+        showRandomSlangWord();
+    }//GEN-LAST:event_btnRandomActionPerformed
+
+    private void tabRandomComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabRandomComponentShown
+        if(textSlangRandom.getText().equals("SLANG RANDOM")){
+            showRandomSlangWord();
+        }
+    }//GEN-LAST:event_tabRandomComponentShown
 
     /**
      * @param args the command line arguments
@@ -412,6 +475,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAddNew;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnRandom;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cbxSearchBy;
@@ -422,8 +486,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel tabDictionary;
     private javax.swing.JPanel tabHistory;
+    private javax.swing.JPanel tabRandom;
     private javax.swing.JTable tblHistory;
     private javax.swing.JTable tblSlangWord;
+    private javax.swing.JLabel textSlangRandom;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

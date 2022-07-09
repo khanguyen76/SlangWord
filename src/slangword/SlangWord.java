@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.sql.Timestamp;
 import java.util.LinkedHashMap;
+import java.util.Random;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -230,15 +231,19 @@ public class SlangWord {
             scanner.useDelimiter("\n");
             while (scanner.hasNext()) {
                 String line = scanner.next();
-                String[] arrSlangWordObj = line.split("`", 0);
-                if (arrSlangWordObj.length == 2) {
+                String[] arrSlangWord = line.split("`", 0);
+                if (arrSlangWord.length == 2) {
                     List<String> value = new ArrayList<>();
-                    String key = arrSlangWordObj[0];
-                    String[] arrMeaning = arrSlangWordObj[1].split("\\|", 0);
+                    String key = arrSlangWord[0];
+                    String[] arrMeaning = arrSlangWord[1].split("\\|", 0);
                     for (String meaning : arrMeaning) {
                         String trimString = meaning.trim();
-                        String capitalizeString = trimString.substring(0, 1).toUpperCase() + trimString.substring(1);
-                        value.add(capitalizeString);
+                        if(trimString.length() > 0){
+                            String capitalizeString = trimString.substring(0, 1).toUpperCase() + trimString.substring(1);
+                            value.add(capitalizeString);
+                        }else{
+                            value.add(trimString);
+                        }
                     }
                     dictionary.put(key, value);
                 }
@@ -247,5 +252,12 @@ public class SlangWord {
         } catch (IOException ex) {
             Logger.getLogger(SlangWord.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public Object randomSlangWord () {
+        Map<String, List<String>> slangMap = dictionary;
+        Object[] Keys = slangMap.keySet().toArray();
+        Object key = Keys[new Random().nextInt(Keys.length)];
+        return key;
     }
 }

@@ -49,3 +49,7 @@ WALAHI`I swear to God
 ISTG`I Swear To God
 GINNEL`Alley
 MUA`Make-Up Alley
+$`Money
+$_$`Has money
+$`Money
+$_$`Has money

@@ -30,6 +30,8 @@ public class MainFrame extends javax.swing.JFrame {
     Boolean isInitRandom = false;
     Boolean isInitQuiz1 = false;
     Boolean isInitQuiz2 = false;
+    Boolean isChoosenAnswerQuiz1 = false;
+    Boolean isChoosenAnswerQuiz2 = false;
     int posAnswerQuiz1, posAnswerQuiz2;
 
     public MainFrame() {
@@ -89,6 +91,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
+        btnClearSearch = new javax.swing.JButton();
         tabHistory = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHistory = new javax.swing.JTable();
@@ -190,11 +193,18 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnClearSearch.setText("X");
+        btnClearSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabDictionaryLayout = new javax.swing.GroupLayout(tabDictionary);
         tabDictionary.setLayout(tabDictionaryLayout);
         tabDictionaryLayout.setHorizontalGroup(
             tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
             .addGroup(tabDictionaryLayout.createSequentialGroup()
                 .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(cbxSearchBy, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -205,13 +215,16 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabDictionaryLayout.createSequentialGroup()
-                        .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnClearSearch))
                     .addGroup(tabDictionaryLayout.createSequentialGroup()
-                        .addComponent(txtSearch)
+                        .addComponent(btnDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSearch))))
+                        .addComponent(btnReset)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(46, 46, 46)
+                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         tabDictionaryLayout.setVerticalGroup(
             tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +233,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxSearchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch))
+                    .addComponent(btnSearch)
+                    .addComponent(btnClearSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddNew)
@@ -268,7 +282,7 @@ public class MainFrame extends javax.swing.JFrame {
         tabHistory.setLayout(tabHistoryLayout);
         tabHistoryLayout.setHorizontalGroup(
             tabHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
         );
         tabHistoryLayout.setVerticalGroup(
             tabHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +292,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("History", tabHistory);
+        jTabbedPane1.addTab("Search history", tabHistory);
 
         tabRandom.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -305,9 +319,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(textSlangRandom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabRandomLayout.createSequentialGroup()
-                .addContainerGap(380, Short.MAX_VALUE)
+                .addContainerGap(435, Short.MAX_VALUE)
                 .addComponent(btnRandom)
-                .addGap(375, 375, 375))
+                .addGap(430, 430, 430))
         );
         tabRandomLayout.setVerticalGroup(
             tabRandomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,20 +399,19 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAnswer1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
-                            .addComponent(btnAnswer3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 27, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAnswer2, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
-                            .addComponent(btnAnswer4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnNextQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNextQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAnswer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAnswer3, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAnswer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAnswer4, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,8 +438,7 @@ public class MainFrame extends javax.swing.JFrame {
             tabQuizSlangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabQuizSlangLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tabQuizSlangLayout.setVerticalGroup(
             tabQuizSlangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -501,20 +513,19 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(title1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAnswerSlang1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
-                            .addComponent(btnAnswerSlang3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 27, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAnswerSlang2, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
-                            .addComponent(btnAnswerSlang4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnNextQuestionDefitition, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNextQuestionDefitition, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAnswerSlang1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAnswerSlang3, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAnswerSlang2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAnswerSlang4, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -541,8 +552,7 @@ public class MainFrame extends javax.swing.JFrame {
             tabQuizDefinitionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabQuizDefinitionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tabQuizDefinitionLayout.setVerticalGroup(
             tabQuizDefinitionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -587,13 +597,11 @@ public class MainFrame extends javax.swing.JFrame {
             String content = txtSearch.getText();
             Map<String, List<String>> data = sw.findItemByKey(content);
             fillSlangTable(data);
-            System.out.print(data.size());
         }
         if (searchBy.equals("definition")) {
             String content = txtSearch.getText();
             Map<String, List<String>> data = sw.findItemByValue(content);
             fillSlangTable(data);
-            System.out.print(content);
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -707,82 +715,108 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnNextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextQuestionActionPerformed
         createQuizSlangWord();
+        isChoosenAnswerQuiz1 = false;
     }//GEN-LAST:event_btnNextQuestionActionPerformed
 
     private void btnAnswer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer1ActionPerformed
-        if (posAnswerQuiz1 == 0) {
-            btnAnswer1.setBackground(Color.green);
-        } else {
-            btnAnswer1.setBackground(Color.red);
-            showAnswerQuiz1();
+        if (!isChoosenAnswerQuiz1) {
+            if (posAnswerQuiz1 == 0) {
+                btnAnswer1.setBackground(Color.green);
+            } else {
+                btnAnswer1.setBackground(Color.red);
+                showAnswerQuiz1();
+            }
+            isChoosenAnswerQuiz1 = true;
         }
     }//GEN-LAST:event_btnAnswer1ActionPerformed
 
     private void btnAnswer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer2ActionPerformed
-        if (posAnswerQuiz1 == 1) {
-            btnAnswer2.setBackground(Color.green);
-        } else {
-            btnAnswer2.setBackground(Color.red);
-            showAnswerQuiz1();
+        if (!isChoosenAnswerQuiz1) {
+            if (posAnswerQuiz1 == 1) {
+                btnAnswer2.setBackground(Color.green);
+            } else {
+                btnAnswer2.setBackground(Color.red);
+                showAnswerQuiz1();
+            }
+            isChoosenAnswerQuiz1 = true;
         }
     }//GEN-LAST:event_btnAnswer2ActionPerformed
 
     private void btnAnswer3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer3ActionPerformed
-        if (posAnswerQuiz1 == 2) {
-            btnAnswer3.setBackground(Color.green);
-        } else {
-            btnAnswer3.setBackground(Color.red);
-            showAnswerQuiz1();
+        if (!isChoosenAnswerQuiz1) {
+            if (posAnswerQuiz1 == 2) {
+                btnAnswer3.setBackground(Color.green);
+            } else {
+                btnAnswer3.setBackground(Color.red);
+                showAnswerQuiz1();
+            }
+            isChoosenAnswerQuiz1 = true;
         }
     }//GEN-LAST:event_btnAnswer3ActionPerformed
 
     private void btnAnswer4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer4ActionPerformed
-        if (posAnswerQuiz1 == 3) {
-            btnAnswer4.setBackground(Color.green);
-        } else {
-            btnAnswer4.setBackground(Color.red);
-            showAnswerQuiz1();
+        if (!isChoosenAnswerQuiz1) {
+            if (posAnswerQuiz1 == 3) {
+                btnAnswer4.setBackground(Color.green);
+            } else {
+                btnAnswer4.setBackground(Color.red);
+                showAnswerQuiz1();
+            }
+            isChoosenAnswerQuiz1 = true;
         }
     }//GEN-LAST:event_btnAnswer4ActionPerformed
 
     private void btnAnswerSlang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswerSlang1ActionPerformed
-        if (posAnswerQuiz2 == 0) {
-            btnAnswerSlang1.setBackground(Color.green);
-        } else {
-            btnAnswerSlang1.setBackground(Color.red);
-            showAnswerQuiz2();
+        if (!isChoosenAnswerQuiz2) {
+            if (posAnswerQuiz2 == 0) {
+                btnAnswerSlang1.setBackground(Color.green);
+            } else {
+                btnAnswerSlang1.setBackground(Color.red);
+                showAnswerQuiz2();
+            }
+            isChoosenAnswerQuiz2 = true;
         }
     }//GEN-LAST:event_btnAnswerSlang1ActionPerformed
 
     private void btnAnswerSlang2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswerSlang2ActionPerformed
-        if (posAnswerQuiz2 == 1) {
-            btnAnswerSlang2.setBackground(Color.green);
-        } else {
-            btnAnswerSlang2.setBackground(Color.red);
-            showAnswerQuiz2();
+        if (!isChoosenAnswerQuiz2) {
+            if (posAnswerQuiz2 == 1) {
+                btnAnswerSlang2.setBackground(Color.green);
+            } else {
+                btnAnswerSlang2.setBackground(Color.red);
+                showAnswerQuiz2();
+            }
+            isChoosenAnswerQuiz2 = true;
         }
     }//GEN-LAST:event_btnAnswerSlang2ActionPerformed
 
     private void btnAnswerSlang3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswerSlang3ActionPerformed
-        if (posAnswerQuiz2 == 2) {
-            btnAnswerSlang3.setBackground(Color.green);
-        } else {
-            btnAnswerSlang3.setBackground(Color.red);
-            showAnswerQuiz2();
+        if (!isChoosenAnswerQuiz2) {
+            if (posAnswerQuiz2 == 2) {
+                btnAnswerSlang3.setBackground(Color.green);
+            } else {
+                btnAnswerSlang3.setBackground(Color.red);
+                showAnswerQuiz2();
+            }
+            isChoosenAnswerQuiz2 = true;
         }
     }//GEN-LAST:event_btnAnswerSlang3ActionPerformed
 
     private void btnAnswerSlang4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswerSlang4ActionPerformed
-        if (posAnswerQuiz2 == 3) {
-            btnAnswerSlang4.setBackground(Color.green);
-        } else {
-            btnAnswerSlang4.setBackground(Color.red);
-            showAnswerQuiz2();
+        if (!isChoosenAnswerQuiz2) {
+            if (posAnswerQuiz2 == 3) {
+                btnAnswerSlang4.setBackground(Color.green);
+            } else {
+                btnAnswerSlang4.setBackground(Color.red);
+                showAnswerQuiz2();
+            }
+            isChoosenAnswerQuiz2 = true;
         }
     }//GEN-LAST:event_btnAnswerSlang4ActionPerformed
 
     private void btnNextQuestionDefititionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextQuestionDefititionActionPerformed
         createQuizDefitition();
+        isChoosenAnswerQuiz2 = false;
     }//GEN-LAST:event_btnNextQuestionDefititionActionPerformed
 
     private void tabQuizDefinitionComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabQuizDefinitionComponentShown
@@ -791,6 +825,11 @@ public class MainFrame extends javax.swing.JFrame {
             isInitQuiz2 = true;
         }
     }//GEN-LAST:event_tabQuizDefinitionComponentShown
+
+    private void btnClearSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSearchActionPerformed
+        txtSearch.setText("");
+        refreshDataTable();
+    }//GEN-LAST:event_btnClearSearchActionPerformed
     private void showAnswerQuiz1() {
         switch (posAnswerQuiz1) {
             case 0:
@@ -971,6 +1010,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAnswerSlang2;
     private javax.swing.JButton btnAnswerSlang3;
     private javax.swing.JButton btnAnswerSlang4;
+    private javax.swing.JButton btnClearSearch;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnNextQuestion;

@@ -117,11 +117,10 @@ public class SlangWord {
             results = dictionary.entrySet().stream()
                     .filter(x -> x.getKey().toLowerCase().equals(key.toLowerCase()))
                     .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
-
+            if(results.size() > 0) saveHistory(results);
         } else {
             results = dictionary;
         }
-        saveHistory(results);
         return results;
     }
 
@@ -131,11 +130,10 @@ public class SlangWord {
             results = dictionary.entrySet().stream()
                     .filter(x -> x.getValue().stream().filter(d -> d.toLowerCase().contains(value.toLowerCase())).count() > 0)
                     .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue().stream().filter(d -> d.toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList())));
-
+            if(results.size() > 0) saveHistory(results);
         } else {
             results = dictionary;
         }
-        saveHistory(results);
         return results;
     }
 //  HISTORY ---------------------------------------------------------------------------------

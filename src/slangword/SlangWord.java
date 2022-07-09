@@ -254,10 +254,18 @@ public class SlangWord {
         }
     }
     
-    public Object randomSlangWord () {
+    public List<String> randomSlangWord (int numberWord) {
         Map<String, List<String>> slangMap = dictionary;
-        Object[] Keys = slangMap.keySet().toArray();
-        Object key = Keys[new Random().nextInt(Keys.length)];
-        return key;
+        List<String> keys = slangMap.keySet().stream().collect(Collectors.toList());
+        List<String> words = new ArrayList<>();
+        for(int i = 0; i < numberWord;i++){
+            int randIndex = new Random().nextInt(keys.size());
+            String key = keys.get(randIndex).toString();
+            words.add(key);
+            keys.remove(randIndex);
+        }
+        return words;
     }
+
+    
 }

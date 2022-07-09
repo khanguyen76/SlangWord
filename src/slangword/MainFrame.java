@@ -4,10 +4,12 @@
  */
 package slangword;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.swing.Box;
@@ -25,6 +27,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     SlangWord sw = SlangWord.getInstance();
     DefaultTableModel tableModel;
+    Boolean isInitRandom = false;
+    Boolean isInitQuiz = false;
+    int posAnswer;
 
     public MainFrame() {
         initComponents();
@@ -89,6 +94,15 @@ public class MainFrame extends javax.swing.JFrame {
         tabRandom = new javax.swing.JPanel();
         textSlangRandom = new javax.swing.JLabel();
         btnRandom = new javax.swing.JButton();
+        tabQuizSlang = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        title = new javax.swing.JLabel();
+        textQuestion = new javax.swing.JLabel();
+        btnAnswer1 = new javax.swing.JButton();
+        btnAnswer2 = new javax.swing.JButton();
+        btnAnswer3 = new javax.swing.JButton();
+        btnAnswer4 = new javax.swing.JButton();
+        btnNextQuestion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.FlowLayout());
@@ -170,22 +184,25 @@ public class MainFrame extends javax.swing.JFrame {
         tabDictionary.setLayout(tabDictionaryLayout);
         tabDictionaryLayout.setHorizontalGroup(
             tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
             .addGroup(tabDictionaryLayout.createSequentialGroup()
-                .addComponent(btnAddNew)
+                .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(cbxSearchBy, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(tabDictionaryLayout.createSequentialGroup()
+                        .addComponent(btnAddNew)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEdit)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEdit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReset)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(tabDictionaryLayout.createSequentialGroup()
-                .addComponent(cbxSearchBy, 0, 176, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSearch))
+                .addGroup(tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabDictionaryLayout.createSequentialGroup()
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReset)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabDictionaryLayout.createSequentialGroup()
+                        .addComponent(txtSearch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSearch))))
         );
         tabDictionaryLayout.setVerticalGroup(
             tabDictionaryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +259,7 @@ public class MainFrame extends javax.swing.JFrame {
         tabHistory.setLayout(tabHistoryLayout);
         tabHistoryLayout.setHorizontalGroup(
             tabHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
         );
         tabHistoryLayout.setVerticalGroup(
             tabHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,21 +296,137 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(textSlangRandom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabRandomLayout.createSequentialGroup()
-                .addContainerGap(327, Short.MAX_VALUE)
+                .addContainerGap(380, Short.MAX_VALUE)
                 .addComponent(btnRandom)
-                .addGap(315, 315, 315))
+                .addGap(375, 375, 375))
         );
         tabRandomLayout.setVerticalGroup(
             tabRandomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabRandomLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(textSlangRandom)
-                .addGap(18, 18, 18)
+                .addGap(39, 39, 39)
                 .addComponent(btnRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Random", tabRandom);
+
+        tabQuizSlang.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                tabQuizSlangComponentShown(evt);
+            }
+        });
+
+        title.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("WHAT DOES IT MEAN ?");
+
+        textQuestion.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        textQuestion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textQuestion.setText("Slang word");
+
+        btnAnswer1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnAnswer1.setText("Answer 1");
+        btnAnswer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnswer1ActionPerformed(evt);
+            }
+        });
+
+        btnAnswer2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnAnswer2.setText("Answer 2");
+        btnAnswer2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnswer2ActionPerformed(evt);
+            }
+        });
+
+        btnAnswer3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnAnswer3.setText("Answer 3");
+        btnAnswer3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnswer3ActionPerformed(evt);
+            }
+        });
+
+        btnAnswer4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnAnswer4.setText("Answer 4");
+        btnAnswer4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnswer4ActionPerformed(evt);
+            }
+        });
+
+        btnNextQuestion.setText("Next question");
+        btnNextQuestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextQuestionActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(textQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAnswer1, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                            .addComponent(btnAnswer3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 27, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAnswer2, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
+                            .addComponent(btnAnswer4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNextQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(btnNextQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(title)
+                .addGap(18, 18, 18)
+                .addComponent(textQuestion)
+                .addGap(37, 37, 37)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnswer1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnswer2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnswer4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnswer3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42))
+        );
+
+        javax.swing.GroupLayout tabQuizSlangLayout = new javax.swing.GroupLayout(tabQuizSlang);
+        tabQuizSlang.setLayout(tabQuizSlangLayout);
+        tabQuizSlangLayout.setHorizontalGroup(
+            tabQuizSlangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabQuizSlangLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        tabQuizSlangLayout.setVerticalGroup(
+            tabQuizSlangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabQuizSlangLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Quiz Slang Word", tabQuizSlang);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -414,13 +547,14 @@ public class MainFrame extends javax.swing.JFrame {
         if (result == JOptionPane.YES_OPTION) {
             sw.reset();
             refreshDataTable();
-            textSlangRandom.setText("SLANG RANDOM");
+            isInitRandom = false;
+            isInitQuiz = false;
         }
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void showRandomSlangWord () {
         Map<String, List<String>> SlangMap = sw.getData();
-        Object key = sw.randomSlangWord();
+        String key = sw.randomSlangWord(1).get(0);
         List<String> definitions = SlangMap.get(key);
         String strDefinitions = String.join(", ", definitions);
         textSlangRandom.setText(key+": "+strDefinitions);
@@ -431,11 +565,133 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRandomActionPerformed
 
     private void tabRandomComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabRandomComponentShown
-        if(textSlangRandom.getText().equals("SLANG RANDOM")){
+        System.out.print(isInitRandom);
+        if(!isInitRandom){
             showRandomSlangWord();
+            isInitRandom = true;
         }
     }//GEN-LAST:event_tabRandomComponentShown
 
+    private void tabQuizSlangComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabQuizSlangComponentShown
+        if(!isInitQuiz){
+            createQuestionQuizSlangWord();
+            isInitQuiz = true;
+        }
+    }//GEN-LAST:event_tabQuizSlangComponentShown
+
+    private void btnNextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextQuestionActionPerformed
+        createQuestionQuizSlangWord();
+    }//GEN-LAST:event_btnNextQuestionActionPerformed
+
+    private void btnAnswer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer1ActionPerformed
+        if(posAnswer == 0){
+            btnAnswer1.setBackground(Color.green);
+        }else{
+            btnAnswer1.setBackground(Color.red);
+            showAnswer();
+        }
+    }//GEN-LAST:event_btnAnswer1ActionPerformed
+
+    private void btnAnswer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer2ActionPerformed
+        if(posAnswer == 1){
+            btnAnswer2.setBackground(Color.green);
+        }else{
+            btnAnswer2.setBackground(Color.red);
+            showAnswer();
+        }
+    }//GEN-LAST:event_btnAnswer2ActionPerformed
+
+    private void btnAnswer3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer3ActionPerformed
+        if(posAnswer == 2){
+            btnAnswer3.setBackground(Color.green);
+        }else{
+            btnAnswer3.setBackground(Color.red);
+            showAnswer();
+        }
+    }//GEN-LAST:event_btnAnswer3ActionPerformed
+
+    private void btnAnswer4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnswer4ActionPerformed
+        if(posAnswer == 3){
+            btnAnswer4.setBackground(Color.green);
+        }else{
+            btnAnswer4.setBackground(Color.red);
+            showAnswer();
+        }
+    }//GEN-LAST:event_btnAnswer4ActionPerformed
+    private void showAnswer () {
+        switch (posAnswer) {
+            case 0:
+                btnAnswer1.setBackground(Color.green);
+                break;
+            case 1:
+                btnAnswer2.setBackground(Color.green);
+                break;
+            case 2:
+                btnAnswer3.setBackground(Color.green);
+                break;
+            case 3:
+                btnAnswer4.setBackground(Color.green);
+        }
+    }
+
+    private void resetAnswer () {
+        btnAnswer1.setBackground(Color.white);
+        btnAnswer2.setBackground(Color.white);
+        btnAnswer3.setBackground(Color.white);
+        btnAnswer4.setBackground(Color.white);
+    }
+    private void createQuestionQuizSlangWord () {
+        resetAnswer();
+        Map<String, List<String>> SlangMap = sw.getData();
+        
+        List<String> keys = sw.randomSlangWord(4);
+
+        List<String> listCorrectAnswer = SlangMap.get(keys.get(0));
+        List<String> listAnswer1 = SlangMap.get(keys.get(1));
+        List<String> listAnswer2 = SlangMap.get(keys.get(2));
+        List<String> listAnswer3 = SlangMap.get(keys.get(3));
+        
+        Random rand = new Random();
+        String correctAnswer = listCorrectAnswer.get(rand.nextInt(listCorrectAnswer.size()));
+        String anotherAnswer1 = listAnswer1.get(rand.nextInt(listAnswer1.size()));
+        String anotherAnswer2 = listAnswer2.get(rand.nextInt(listAnswer2.size()));
+        String anotherAnswer3 = listAnswer3.get(rand.nextInt(listAnswer3.size()));
+        
+        textQuestion.setText(keys.get(0).toString());
+        posAnswer = rand.nextInt(4);
+
+        switch (posAnswer) {
+            case 0:
+                btnAnswer1.setName("CorrectAnswer");
+                btnAnswer1.setText(correctAnswer);
+                btnAnswer2.setText(anotherAnswer1);
+                btnAnswer3.setText(anotherAnswer2);
+                btnAnswer4.setText(anotherAnswer3);
+                break;
+            case 1:
+                btnAnswer2.setName("CorrectAnswer");
+                btnAnswer2.setText(correctAnswer);
+                btnAnswer1.setText(anotherAnswer1);
+                btnAnswer3.setText(anotherAnswer2);
+                btnAnswer4.setText(anotherAnswer3);
+                break;
+            case 2:
+                btnAnswer3.setName("CorrectAnswer");
+                btnAnswer3.setText(correctAnswer);
+                btnAnswer1.setText(anotherAnswer1);
+                btnAnswer2.setText(anotherAnswer2);
+                btnAnswer4.setText(anotherAnswer3);
+                break;
+            case 3:
+                btnAnswer4.setName("CorrectAnswer");
+                btnAnswer4.setText(correctAnswer);
+                btnAnswer1.setText(anotherAnswer1);
+                btnAnswer2.setText(anotherAnswer2);
+                btnAnswer3.setText(anotherAnswer3);
+        }
+
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -473,23 +729,32 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNew;
+    private javax.swing.JButton btnAnswer1;
+    private javax.swing.JButton btnAnswer2;
+    private javax.swing.JButton btnAnswer3;
+    private javax.swing.JButton btnAnswer4;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnNextQuestion;
     private javax.swing.JButton btnRandom;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cbxSearchBy;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel tabDictionary;
     private javax.swing.JPanel tabHistory;
+    private javax.swing.JPanel tabQuizSlang;
     private javax.swing.JPanel tabRandom;
     private javax.swing.JTable tblHistory;
     private javax.swing.JTable tblSlangWord;
+    private javax.swing.JLabel textQuestion;
     private javax.swing.JLabel textSlangRandom;
+    private javax.swing.JLabel title;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
